@@ -1,0 +1,3 @@
+ansible_user : skex86ns
+ansible_ssh_private_key_file : /home/skex86ns/.ssh/id_rsa
+

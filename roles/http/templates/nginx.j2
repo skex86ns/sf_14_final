@@ -1,0 +1,28 @@
+worker_processes  1;
+events {
+    worker_connections  1024;
+}
+
+http {
+    include            mime.types;
+    default_type       application/octet-stream;
+    sendfile           on;
+    keepalive_timeout  65;
+    index              index.php index.html index.htm;
+
+    server {
+        listen       {{ nginx_port }};
+        server_name  example.com;
+        charset utf-8;
+        gzip on;
+        root {{ root_nginx }};
+
+        location ~ \.php$ {
+          fastcgi_pass {{ php_fpm_host }}:{{  php_fpm_port}};
+          fastcgi_index index.php;
+          fastcgi_param SCRIPT_FILENAME $request_filename;
+          include fastcgi_params;
+          fastcgi_ignore_client_abort off;
+        }
+    }
+}

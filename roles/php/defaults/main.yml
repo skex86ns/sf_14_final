@@ -1,0 +1,5 @@
+---
+# defaults file for php
+php_fpm_port : 9000
+listen_ip    : 192.168.88.102
+root_nginx   : /usr/share/nginx/html

@@ -1,0 +1,39 @@
+---
+# tasks file for http
+
+- name: Open Firewall Port
+  firewalld:
+    zone     : public
+    port     : "{{ nginx_port }}/tcp"
+    permanent: true
+    state    : enabled
+    immediate: true
+
+- name: Install EPEL Repo
+  yum:
+    name : epel-release
+    state: present
+
+- name: Install Nginx
+  yum:
+    name : nginx
+    state: latest
+
+- name: Copy nginx.conf
+  template: src=nginx.j2 dest=/etc/nginx/nginx.conf mode=0644
+  notify: Restart_Nginx
+
+- name: Create a directory if it does not exist
+  file:
+    path: '{{ root_nginx }}'
+    state: directory
+    owner: root
+    group: root
+    mode : '0755'
+
+- name: Start Nginx and boot
+  service:
+    name   : nginx
+    state  : started
+    enabled: yes
+...

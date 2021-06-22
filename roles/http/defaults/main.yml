@@ -1,0 +1,6 @@
+---
+# defaults file for http
+php_fpm_port : 9000
+php_fpm_host : 192.168.88.102
+nginx_port   : 8080
+root_nginx   : /usr/share/nginx/html

@@ -1,0 +1,9 @@
+---
+- name: Run role HTTP 
+  hosts: client1 
+  gather_facts: no
+  become: yes
+
+  roles:
+     - http
+...

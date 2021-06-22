@@ -1,0 +1,9 @@
+---
+- name: Run role USERS 
+  hosts: servers 
+  gather_facts: no
+  become: yes
+
+  roles:
+     - users
+...

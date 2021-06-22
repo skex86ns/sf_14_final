@@ -1,0 +1,42 @@
+---
+# tasks file for php
+- name: Open Firewall Port
+  firewalld:
+    zone     : public
+    port     : "{{ php_fpm_port }}/tcp"
+    permanent: true
+    state    : enabled
+    immediate: true
+
+- name: Install EPEL Repo
+  yum:
+    name : epel-release
+    state: present
+
+- name: Install PHP-FPM
+  yum:
+    name : php-fpm
+    state: latest
+
+- name: Copy php-fpm.conf
+  template: src=www.j2 dest=/etc/php-fpm.d/www.conf mode=0644
+  notify: Restart_php_fpm
+
+- name: Create a directory if it does not exist
+  file:
+    path: '{{ root_nginx }}'
+    state: directory
+    owner: root
+    group: root
+    mode : '0755'
+
+- name: Copy index.php
+  template: src=index.php dest={{ root_nginx }}/index.php mode=644
+
+- name: Start php-fpm and boot
+  service:
+    name   : php-fpm
+    state  : started
+    enabled: yes
+
+...

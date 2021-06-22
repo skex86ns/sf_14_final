@@ -1,0 +1,9 @@
+[http]
+client1 ansible_host=192.168.88.101
+
+[php]
+client2 ansible_host=192.168.88.102
+
+[servers:children]
+http
+php

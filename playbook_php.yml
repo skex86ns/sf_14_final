@@ -1,0 +1,9 @@
+---
+- name: Run role PHP 
+  hosts: client2
+  gather_facts: no
+  become: yes
+
+  roles:
+     - php
+...
